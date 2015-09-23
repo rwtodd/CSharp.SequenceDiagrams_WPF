@@ -1,0 +1,39 @@
+﻿<Window x:Class="EasyDiagrams.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:local="clr-namespace:EasyDiagrams"
+        Title="MainWindow" Height="350" Width="525">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"></ColumnDefinition>
+            <ColumnDefinition Width="8"></ColumnDefinition>
+            <ColumnDefinition Width="*"></ColumnDefinition>
+        </Grid.ColumnDefinitions>
+        <DockPanel  Grid.Column="0">
+            <Button DockPanel.Dock="Top" Click="PNG_Save">Save as PNG</Button>
+            <TextBox DockPanel.Dock="Bottom" VerticalScrollBarVisibility="Auto" AcceptsReturn="True" HorizontalScrollBarVisibility="Auto"
+                     TextChanged="TheTextChanged" Name="SourceArea" FontSize="15"  FontFamily="Courier New" xml:space="preserve">Title: Example Diagram
+
+# You can name the actors, if you want.
+                
+all: Allocator
+mem: Memory Ctrl
+
+# Here is how you make arrows and notes:
+                
+all to mem: run()
+mem to Blocks: search()
+blocks to self: looks up 
+blocks to Bounds: check(blk)
+bounds to blocks dashed
+note blocks: when we find space, we return it as-is
+blocks to mem dashed: found space
+mem to all dashed
+</TextBox>
+        </DockPanel>
+        <GridSplitter  Width="8" Grid.Column="1" HorizontalAlignment="Stretch"></GridSplitter>
+        <ScrollViewer Grid.Column="2" HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto">
+            <local:ScrollCanvas x:Name="DrawArea" Background="White" />
+        </ScrollViewer>
+    </Grid>
+</Window>
