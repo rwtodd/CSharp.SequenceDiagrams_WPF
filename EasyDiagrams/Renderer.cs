@@ -40,8 +40,8 @@ namespace EasyDiagrams
         private double computedBoxSep; // how far apart are the actor lines?
         
         // I'd make the following two static, but it has to be initialized in the WPF thread.
-        private DoubleCollection DASHES = null;
-        private Brush translucentBrush = null;
+        private DoubleCollection? DASHES = null;
+        private Brush? translucentBrush = null;
 
         public Renderer(Canvas canvas, Diagram diagram) { 
             c = canvas;  

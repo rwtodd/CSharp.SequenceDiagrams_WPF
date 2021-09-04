@@ -16,7 +16,7 @@ namespace EasyDiagrams
          
             while( !(ans.HasErrors || t.OutOfChars) )
             {
-                Token next = t.NextToken();
+                Token next = t.NextToken()!;
                 switch (next.type)
                 {
                     case TokenType.TOK_EOL:  // empty lines are ok
@@ -47,7 +47,7 @@ namespace EasyDiagrams
             var actor = d.MaybeNewActor(id.data);
 
             Token str = t.NextToken();
-            string desc = null;
+            string? desc = null;
             switch(str.type) {
                 case TokenType.TOK_STRING:
                     desc = str.data;
@@ -96,7 +96,7 @@ namespace EasyDiagrams
             Token rightID = t.NextToken();
             
             // this should be an identifier... or SELF...
-            Actor right = null;
+            Actor? right = null;
 
             switch (rightID.type)
             {

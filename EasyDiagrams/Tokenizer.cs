@@ -21,6 +21,8 @@ namespace EasyDiagrams
     // basically an all-public data-holding class. No encapsulation here.
     class Token
     {
+        public static readonly Token TOKEN_EOL = new Token(TokenType.TOK_EOL, "");
+
         public TokenType type;
         public string data;
 
@@ -47,10 +49,8 @@ namespace EasyDiagrams
 
         public Token NextToken()
         {
-            // if we had a token waiting, just return it
-            Token ans = null;
+            var ans = Token.TOKEN_EOL;
 
-            // otherwise... process some text.
             skipWS();
             if (!OutOfChars)
             {
@@ -59,10 +59,8 @@ namespace EasyDiagrams
                 {
                     case '#':   // comment
                         getToEOL();
-                        ans = new Token(TokenType.TOK_EOL, null);
                         break;
                     case '\n':  // end of line/statement
-                        ans = new Token(TokenType.TOK_EOL, null);
                         break;
                     case ':':   // start of free-form string arg
                         ans = new Token(TokenType.TOK_STRING, getToEOL());
@@ -81,7 +79,6 @@ namespace EasyDiagrams
         // process characters and figure out if it's a keyword or not.
         private Token processIdentifier(char first)
         {
-            Token ans = null;
             var sb = new StringBuilder();
             sb.Append(first);
 
@@ -95,28 +92,15 @@ namespace EasyDiagrams
 
             // now we have an identifier... we need to see if it's a keyword...
             string ident = sb.ToString();
-            switch (ident.ToUpper())
+            return ident.ToUpper() switch 
             {
-                case "TO":
-                    ans = new Token(TokenType.TOK_TO, ident);
-                    break;
-                case "SELF":
-                    ans = new Token(TokenType.TOK_SELF, ident);
-                    break;
-                case "DASHED":
-                    ans = new Token(TokenType.TOK_DASHED, ident);
-                    break;
-                case "TITLE":
-                    ans = new Token(TokenType.TOK_TITLE, ident);
-                    break;
-                case "NOTE":
-                    ans = new Token(TokenType.TOK_NOTE, ident);
-                    break;
-                default:
-                    ans = new Token(TokenType.TOK_IDENTIFIER, ident);
-                    break;
-            }
-            return ans;
+               "TO" =>  new Token(TokenType.TOK_TO, ident),
+               "SELF" => new Token(TokenType.TOK_SELF, ident),
+               "DASHED" => new Token(TokenType.TOK_DASHED, ident),
+               "TITLE" => new Token(TokenType.TOK_TITLE, ident),
+               "NOTE" => new Token(TokenType.TOK_NOTE, ident),
+               _ => new Token(TokenType.TOK_IDENTIFIER, ident)
+            };
         }
 
         // get a string up to the EOL

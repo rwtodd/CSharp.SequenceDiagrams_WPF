@@ -26,6 +26,7 @@ namespace EasyDiagrams
             From = f;
             To = t;
             Note = false;
+            Desc = "";
         }
     }
 

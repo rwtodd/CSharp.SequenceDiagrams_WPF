@@ -20,7 +20,7 @@ namespace EasyDiagrams
     /// </summary>
     public partial class MainWindow : Window
     {
-        private System.Timers.Timer quietInterval = null;
+        private System.Timers.Timer quietInterval;
 
         public MainWindow()
         {
@@ -85,7 +85,7 @@ namespace EasyDiagrams
             sfd.DefaultExt = ".png";
             sfd.Filter = "PNG Files|*.png";
             Nullable<bool> result = sfd.ShowDialog();
-            string filename = null;
+            string? filename = null;
             if (result.HasValue && result.Value)
             {
                 filename = sfd.FileName;
